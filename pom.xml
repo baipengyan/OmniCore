@@ -2,17 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
+
     <groupId>com.beloved</groupId>
     <artifactId>OmniCore</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
+
+    <packaging>pom</packaging>
+
     <name>OmniCore</name>
     <description>OmniCore</description>
+
     <url/>
     <licenses>
         <license/>
@@ -26,18 +25,97 @@
         <tag/>
         <url/>
     </scm>
+
     <properties>
+        <!-- 定义 JDK 的版本号 -->
         <java.version>23</java.version>
+
+        <!-- 定义 OmniCore 的版本号 -->
+        <revision>1.0.0</revision>
+        <!-- 定义 spring-boot 的版本号 -->
+        <spring-boot.version>3.4.2</spring-boot.version>
+        <!-- 定义 spring-cloud 的版本号 -->
+        <spring-cloud.version>2024.0.0</spring-cloud.version>
+        <!-- 定义 spring-cloud-alibaba 的版本号 -->
+        <spring-cloud-alibaba.version>2023.0.1.3</spring-cloud-alibaba.version>
+
+        <!-- 资源定界符 -->
+        <resource.delimiter>@</resource.delimiter>
+        <!-- 项目构建源编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- 项目报告输出编码 -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- 定义 maven 编译源 的版本号 -->
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <!-- 定义 maven 编译目标 的版本号 -->
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <!-- 定义 flatten-maven-plugin 的版本号 -->
+        <maven.flatten.version>1.6.0</maven.flatten.version>
+        <!-- 定义 maven-compiler-plugin 的版本号 -->
+        <maven.compiler.version>3.13.0</maven.compiler.version>
+        <!-- 定义 maven-jar-plugin 的版本号 -->
+        <maven.jar.version>3.4.2</maven.jar.version>
+        <!-- 定义 maven-resources-plugin 的版本号 -->
+        <maven.resources.version>3.3.1</maven.resources.version>
+        <!-- 定义 maven-surefire-plugin 的版本号 -->
+        <maven.surefire.version>3.5.2</maven.surefire.version>
+        <!-- 定义 native-maven-plugin 的版本号 -->
+        <native-maven.version>0.10.5</native-maven.version>
+        <!-- 定义 spring-boot-maven-plugin 的版本号 -->
+        <spring-boot-maven.version>3.4.2</spring-boot-maven.version>
+
+
+        <!-- 定义 mybatis 的版本号 -->
+        <mybatis.version>3.0.4</mybatis.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter-test</artifactId>
+                <version>${mybatis.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.10.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -45,10 +123,210 @@
     <build>
         <plugins>
             <plugin>
+                <!-- 插件的 GroupId，标识插件所属的组织 -->
+                <groupId>org.codehaus.mojo</groupId>
+                <!-- 插件的 ArtifactId，标识插件的名称 -->
+                <artifactId>flatten-maven-plugin</artifactId>
+                <!-- 插件的版本号，这里通过变量引用上面定义的版本号 -->
+                <version>${maven.flatten.version}</version>
+                <configuration>
+                    <!-- 配置扁平化后的 POM 文件的名称 -->
+                    <flattenedPomFilename>pom-xml-flattened</flattenedPomFilename>
+                    <!-- 是否更新原始 POM 文件 -->
+                    <updatePomFile>true</updatePomFile>
+                    <!-- 指定扁平化模式，resolveCiFriendliesOnly 表示仅解析 CI 友好的占位符 -->
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <!-- 定义插件的执行配置 -->
+                    <execution>
+                        <!-- 执行的唯一标识 -->
+                        <id>flatten</id>
+                        <!-- 指定插件绑定的生命周期阶段 -->
+                        <phase>process-resources</phase>
+                        <!-- 定义执行的目标 -->
+                        <goals>
+                            <!-- 执行扁平化操作 -->
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <!-- 定义清理阶段的执行配置 -->
+                    <execution>
+                        <!-- 清理阶段的唯一标识 -->
+                        <id>flatten.clean</id>
+                        <!-- 指定清理阶段绑定的生命周期阶段 -->
+                        <phase>clean</phase>
+                        <!-- 定义清理阶段执行的目标 -->
+                        <goals>
+                            <!-- 执行清理操作 -->
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.version}</version>
+                <configuration>
+                    <propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
+                    <delimiters>
+                        <delimiter>${resource.delimiter}</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <version>${native-maven.version}</version>
+            </plugin>
+
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot-maven.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>native</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-jar-plugin</artifactId>
+                            <configuration>
+                                <archive>
+                                    <manifestEntries>
+                                        <Spring-Boot-Native-Processed>true</Spring-Boot-Native-Processed>
+                                    </manifestEntries>
+                                </archive>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>process-aot</id>
+                                    <goals>
+                                        <goal>process-aot</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.graalvm.buildtools</groupId>
+                            <artifactId>native-maven-plugin</artifactId>
+                            <configuration>
+                                <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                                <requiredVersion>22.3</requiredVersion>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>add-reachability-metadata</id>
+                                    <goals>
+                                        <goal>add-reachability-metadata</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>nativeTest</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-launcher</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>process-test-aot</id>
+                                <goals>
+                                    <goal>process-test-aot</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <configuration>
+                            <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                            <requiredVersion>22.3</requiredVersion>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>native-test</id>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <modules>
+        <module>OmniCore-authorization-server</module>
+    </modules>
 
 </project>
