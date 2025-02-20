@@ -109,7 +109,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails userDetails = User.withUsername("admin")
-                .password(passwordEncoder().encode("123123"))
+                .password(passwordEncoder().encode("admin"))
                 .roles("admin")
                 .build();
 
