@@ -1,4 +1,4 @@
-package com.beloved.omnicoreauthorizationserver.convert;
+package com.beloved.omnicoreauthorizationserver.beanmapper;
 
 import com.beloved.omnicoreauthorizationserver.domain.Users;
 import com.beloved.omnicoreauthorizationserver.service.impl.ChickUserDetails;

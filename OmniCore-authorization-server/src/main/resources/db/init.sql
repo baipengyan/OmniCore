@@ -24,10 +24,11 @@ VALUES ('79e31552-9ffb-42f3-8aa6-ff83d0860215', 'chick', '2024-12-04 14:23:41',
         '{bcrypt}$2a$10$ftuHVREYeyjJvzzbkS67.uxo.JfU2SJ7OAeZMC7swZPsFfc69/tJm', null,
         '79e31552-9ffb-42f3-8aa6-ff83d0860215',
         'client_secret_post,client_secret_jwt,client_secret_basic',
-        'refresh_token,client_credentials,authorization_code', 'https://www.baidu.com', 'http://127.0.0.1:8000/',
+        'refresh_token,client_credentials,authorization_code,password', 'https://www.baidu.com',
+        'http://127.0.0.1:8000/',
         'openid,profile',
         '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":true}',
-        '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":true,"settings.token.x509-certificate-bound-access-tokens":false,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",3600.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",2592000.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",300.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",300.000000000]}');
+        '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":true,"settings.token.x509-certificate-bound-access-tokens":false,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",3600.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"reference"},"settings.token.refresh-token-time-to-live":["java.time.Duration",2592000.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",300.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",300.000000000]}');
 
 
 create table users

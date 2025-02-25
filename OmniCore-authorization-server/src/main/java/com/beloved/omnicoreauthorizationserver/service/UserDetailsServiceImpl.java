@@ -1,7 +1,7 @@
 package com.beloved.omnicoreauthorizationserver.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.beloved.omnicoreauthorizationserver.convert.UsersBeanMapper;
+import com.beloved.omnicoreauthorizationserver.beanmapper.UsersBeanMapper;
 import com.beloved.omnicoreauthorizationserver.domain.Authorities;
 import com.beloved.omnicoreauthorizationserver.domain.Users;
 import com.beloved.omnicoreauthorizationserver.mapper.AuthoritiesMapper;
@@ -27,7 +27,7 @@ import java.util.Set;
  */
 @Service
 @RequiredArgsConstructor
-public class ChickUserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     private final UsersMapper usersMapper;
     private final AuthoritiesMapper authoritiesMapper;
 
